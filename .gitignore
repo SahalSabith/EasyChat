@@ -1,3 +1,4 @@
 env
 EasyChat/.env
 .DS_Store
+EasyChat/db.sqlite3
