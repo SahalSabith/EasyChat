@@ -1,4 +1,13 @@
-env
+# Environment
+env/
+.env
 EasyChat/.env
+
+# macOS
 .DS_Store
-EasyChat/db.sqlite3
+
+# SQLite DB
+db.sqlite3
+*.sqlite3
+*.sqlite
+*.db
