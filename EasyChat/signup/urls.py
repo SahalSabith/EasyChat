@@ -10,4 +10,7 @@ urlpatterns = [
     path('resend-otp/', ResendOTPView.as_view(), name='resend-otp'),
     path('profile/', UserProfileView.as_view(), name='user-profile'),
 
+
+    
+
 ]
