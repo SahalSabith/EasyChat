@@ -12,6 +12,9 @@ import json
 from .models import User, OTP
 from .serializers import SignupSerializer, VerifyOTPSerializer, LoginSerializer, UserProfileSerializer
 from .utils import send_otp_email
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
+
 
 
 class SignupView(APIView):
