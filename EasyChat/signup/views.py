@@ -145,37 +145,37 @@ class LogoutView(APIView):
             return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
 
-class ResendOTPView(APIView):
-    def post(self, request):
-        email = request.data.get('email')
-        if not email:
-            return Response({"error": "Email is required"}, status=status.HTTP_400_BAD_REQUEST)
+# class ResendOTPView(APIView):
+#     def post(self, request):
+#         email = request.data.get('email')
+#         if not email:
+#             return Response({"error": "Email is required"}, status=status.HTTP_400_BAD_REQUEST)
         
-        try:
-            latest_otp = OTP.objects.filter(email=email).latest('created_at')
-            user_data = latest_otp.get_user_data()
-        except OTP.DoesNotExist:
-            user_data = None
+#         try:
+#             latest_otp = OTP.objects.filter(email=email).latest('created_at')
+#             user_data = latest_otp.get_user_data()
+#         except OTP.DoesNotExist:
+#             user_data = None
         
-        try:
-            user = User.objects.get(email=email)
-            if user.is_verified:
-                return Response({"error": "User is already verified"}, status=status.HTTP_400_BAD_REQUEST)
-        except User.DoesNotExist:
-            pass
+#         try:
+#             user = User.objects.get(email=email)
+#             if user.is_verified:
+#                 return Response({"error": "User is already verified"}, status=status.HTTP_400_BAD_REQUEST)
+#         except User.DoesNotExist:
+#             pass
         
-        if send_otp_email(email, user_data):
-            return Response({
-                "message": "New verification code sent to your email",
-                "email": email,
-                "signup_details": {
-                    "username": user_data.get('username') if user_data else None,
-                    "email": email,
-                    "consent_email_updates": user_data.get('consent_email_updates', False) if user_data else False
-                }
-            }, status=status.HTTP_200_OK)
-        else:
-            return Response({"error": "Failed to send verification email"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+#         if send_otp_email(email, user_data):
+#             return Response({
+#                 "message": "New verification code sent to your email",
+#                 "email": email,
+#                 "signup_details": {
+#                     "username": user_data.get('username') if user_data else None,
+#                     "email": email,
+#                     "consent_email_updates": user_data.get('consent_email_updates', False) if user_data else False
+#                 }
+#             }, status=status.HTTP_200_OK)
+#         else:
+#             return Response({"error": "Failed to send verification email"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 class UserProfileView(APIView):
